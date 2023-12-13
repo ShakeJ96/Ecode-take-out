@@ -1,6 +1,7 @@
 package com.ecode.controller.admin;
 
 import com.ecode.constant.JwtClaimsConstant;
+import com.ecode.dto.EmployeeDTO;
 import com.ecode.dto.EmployeeLoginDTO;
 import com.ecode.entity.Employee;
 import com.ecode.properties.JwtProperties;
@@ -8,6 +9,8 @@ import com.ecode.result.Result;
 import com.ecode.service.EmployeeService;
 import com.ecode.utils.JwtUtil;
 import com.ecode.vo.EmployeeLoginVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +27,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/admin/employee")
 @Slf4j
+@Api(tags = "员工相关接口")
 public class EmployeeController {
 
     @Autowired
@@ -38,6 +42,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/login")
+    @ApiOperation(value = "员工登录")
     public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
         log.info("员工登录：{}", employeeLoginDTO);
 
@@ -67,7 +72,26 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/logout")
+    @ApiOperation("员工退出")
     public Result<String> logout() {
+
+        return Result.success();
+    }
+
+
+    /**
+     * 新增员工
+     * @param employeeDTO
+     * @return
+     */
+    @PostMapping
+    @ApiOperation("新增员工")
+    public Result save(@RequestBody EmployeeDTO employeeDTO){
+        log.info("新增员工：{}",employeeDTO);
+
+        System.out.println("当前线程的id："+Thread.currentThread().getId());
+
+        employeeService.save(employeeDTO); //该方法后续再定义
         return Result.success();
     }
 
