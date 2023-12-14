@@ -1,5 +1,6 @@
 package com.ecode.mapper;
 
+import com.ecode.annotation.AutoFill;
 import com.github.pagehelper.Page;
 import com.ecode.enumeration.OperationType;
 import com.ecode.dto.CategoryPageQueryDTO;
@@ -19,6 +20,8 @@ public interface CategoryMapper {
     @Insert("insert into category(type, name, sort, status, create_time, update_time, create_user, update_user)" +
             " VALUES" +
             " (#{type}, #{name}, #{sort}, #{status}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser})")
+
+    @AutoFill(value = OperationType.INSERT)
     void insert(Category category);
 
     /**
@@ -39,6 +42,7 @@ public interface CategoryMapper {
      * 根据id修改分类
      * @param category
      */
+    @AutoFill(OperationType.UPDATE)
     void update(Category category);
 
     /**
