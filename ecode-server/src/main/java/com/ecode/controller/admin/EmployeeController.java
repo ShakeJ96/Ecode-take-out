@@ -3,20 +3,21 @@ package com.ecode.controller.admin;
 import com.ecode.constant.JwtClaimsConstant;
 import com.ecode.dto.EmployeeDTO;
 import com.ecode.dto.EmployeeLoginDTO;
+import com.ecode.dto.EmployeePageQueryDTO;
 import com.ecode.entity.Employee;
 import com.ecode.properties.JwtProperties;
+import com.ecode.result.PageResult;
 import com.ecode.result.Result;
 import com.ecode.service.EmployeeService;
 import com.ecode.utils.JwtUtil;
 import com.ecode.vo.EmployeeLoginVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import jdk.jpackage.internal.Log;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -95,4 +96,57 @@ public class EmployeeController {
         return Result.success();
     }
 
+    /**
+     * 员工分页查询
+     * @param employeePageQueryDTO
+     * @return
+     */
+    @GetMapping("/page")
+    @ApiOperation("员工分页查询")
+    public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO){
+        log.info("员工分页查询，参数为：{}", employeePageQueryDTO);
+        PageResult pageResult=employeeService.pageQuery(employeePageQueryDTO);
+        return Result.success(pageResult);
+    }
+
+    /**
+     * 启用禁用员工帐号
+     * @param status
+     * @param id
+     * @return
+     */
+
+    @PostMapping("/status/{status}")
+    @ApiOperation("启用禁用员工帐号1")
+    public Result startOrStop(@PathVariable Integer status,Long id){
+        log.info("启用禁用员工帐号：{},{}",status,id);
+        employeeService.startOrStop(status,id);
+        return Result.success();
+    }
+
+    /**
+     * 根据id查询员工的信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询员工的信息")
+    public Result<Employee> getById(@PathVariable Long id){
+        log.info("当前员工的id为：{}",id);
+        Employee employee=employeeService.getById(id);
+        return Result.success(employee);
+    }
+
+    /**
+     * 编辑员工信息
+      * @param employeeDTO
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("编辑员工信息")
+    public Result update(@RequestBody EmployeeDTO employeeDTO){
+        log.info("编辑员工信息：{}",employeeDTO);
+        employeeService.update(employeeDTO);
+        return Result.success();
+    }
 }
