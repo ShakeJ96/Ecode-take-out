@@ -24,7 +24,7 @@ mybatis:
 logging:
   level:
     com:
-      sky:
+      ecode:
         mapper: debug
         service: info
         controller: info
@@ -37,4 +37,13 @@ ecode:
     admin-ttl: 86400000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+
+sky:
+  alioss:
+    endpoint: ${sky.alioss.endpoint}
+    access-key-id: ${sky.alioss.access-key-id}
+    access-key-secret: ${sky.alioss.access-key-secret}
+    bucket-name: ${sky.alioss.bucket-name}
+
+
 

@@ -6,3 +6,22 @@ ecode:
     database: ecode_take_out
     username: root
     password: 123456
+
+#  alioss:
+#    endpoint: oss-cn-beijing.aliyuncs.com
+#    access-key-id: LTAI5tL1Wqn5sp7YgmxZReZm
+#    access-key-secret: DJUWlXwdcHKUI0eIswreqqZBQKFQfV
+#    bucket-name: ecode-take-out
+
+#  alioss:
+#    endpoint: oss-cn-beijing.aliyuncs.com
+#    access-key-id: LTAI5tHYvwsiNyzBQZxcu31T
+#    access-key-secret: jeyJNXSWVT6emqj8axGPsITcAkCSnL
+#    bucket-name: bupt-take-out
+
+sky:
+  alioss:
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    access-key-id: LTAI5tPeFLzsPPT8gG3LPW64
+    access-key-secret: U6k1brOZ8gaOIXv3nXbulGTUzy6Pd7
+    bucket-name: sky-take-out
