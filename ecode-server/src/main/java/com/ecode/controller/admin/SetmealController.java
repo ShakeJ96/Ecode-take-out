@@ -27,7 +27,6 @@ import java.util.UUID;
 @RequestMapping("/admin/setmeal")
 @Api(tags = "套餐相关接口")
 @Slf4j
-@Component
 public class SetmealController {
 
     @Autowired
