@@ -26,13 +26,13 @@
 
     <select id="pageQuery" resultType="com.ecode.vo.SetmealVO">
         select
-            s.*,c.name categoryName
+        s.*,c.name categoryName
         from
-            setmeal s
+        setmeal s
         left join
-            category c
+        category c
         on
-            s.category_id=c.id
+        s.category_id=c.id
         <where>
             <if test="name!=null">
                 and s.name like cncat('%',#{name},'%')
@@ -45,6 +45,21 @@
             </if>
         </where>
         order by s.create_time desc
-</select>
+    </select>
+
+    <select id="list" resultType="com.ecode.entity.Setmeal">
+        select * from setmeal
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
 
 </mapper>

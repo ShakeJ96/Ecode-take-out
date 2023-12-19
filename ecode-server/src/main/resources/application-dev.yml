@@ -12,11 +12,15 @@ ecode:
     password: # 我忘了自己压根没设定密码~，这里直接为空就行
     database: 10
 
-#  alioss:
-#    endpoint: oss-cn-beijing.aliyuncs.com
-#    access-key-id: LTAI5tL1Wqn5sp7YgmxZReZm
-#    access-key-secret: DJUWlXwdcHKUI0eIswreqqZBQKFQfV
-#    bucket-name: ecode-take-out
+sky:
+  alioss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    access-key-id: LTAI5tL1Wqn5sp7YgmxZReZm
+    access-key-secret: DJUWlXwdcHKUI0eIswreqqZBQKFQfV
+    bucket-name: ecode-take-out
+  wechat:
+    appid: wxcc751972a9184930
+    secret: d426a290b6c5033c2d3cb51d4a7cdb1c
 
 #  alioss:
 #    endpoint: oss-cn-beijing.aliyuncs.com
@@ -24,9 +28,9 @@ ecode:
 #    access-key-secret: jeyJNXSWVT6emqj8axGPsITcAkCSnL
 #    bucket-name: bupt-take-out
 
-sky:
-  alioss:
-    endpoint: oss-cn-hangzhou.aliyuncs.com
-    access-key-id: LTAI5tPeFLzsPPT8gG3LPW64
-    access-key-secret: U6k1brOZ8gaOIXv3nXbulGTUzy6Pd7
-    bucket-name: sky-take-out
+#sky:
+#  alioss:
+#    endpoint: oss-cn-hangzhou.aliyuncs.com
+#    access-key-id: LTAI5tPeFLzsPPT8gG3LPW64
+#    access-key-secret: U6k1brOZ8gaOIXv3nXbulGTUzy6Pd7
+#    bucket-name: sky-take-out

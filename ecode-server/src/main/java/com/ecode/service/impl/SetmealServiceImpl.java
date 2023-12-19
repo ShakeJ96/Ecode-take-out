@@ -14,6 +14,7 @@ import com.ecode.mapper.SetmealDishMapper;
 import com.ecode.mapper.SetmealMapper;
 import com.ecode.result.PageResult;
 import com.ecode.service.SetmealService;
+import com.ecode.vo.DishItemVO;
 import com.ecode.vo.SetmealVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -112,20 +113,20 @@ public class SetmealServiceImpl implements SetmealService {
      */
     @Override
     public void deleteBatch(List<Long> ids) {
-       ids.forEach(id ->{
-           Setmeal setmeal=setmealMapper.getById(id);
-           if(StatusConstant.ENABLE==setmeal.getStatus()){
-               //起售中的套餐不能删除
-               throw new DeletionNotAllowedException(MessageConstant.SETMEAL_ON_SALE);
-           }
-       });
+        ids.forEach(id ->{
+            Setmeal setmeal=setmealMapper.getById(id);
+            if(StatusConstant.ENABLE==setmeal.getStatus()){
+                //起售中的套餐不能删除
+                throw new DeletionNotAllowedException(MessageConstant.SETMEAL_ON_SALE);
+            }
+        });
 
-       ids.forEach(setmealId ->{
-           //删除套餐中的数据
-           setmealMapper.deleteById(setmealId);
-           //删除套餐中菜品关系表中的数据
-           setmealDishMapper.deleteBySetmealId(setmealId);
-       });
+        ids.forEach(setmealId ->{
+            //删除套餐中的数据
+            setmealMapper.deleteById(setmealId);
+            //删除套餐中菜品关系表中的数据
+            setmealDishMapper.deleteBySetmealId(setmealId);
+        });
     }
 
     /**
@@ -172,4 +173,22 @@ public class SetmealServiceImpl implements SetmealService {
         setmealDishMapper.insertBatch(setmealDishes);
     }
 
+    /**
+     * 条件查询
+     * @param setmeal
+     * @return
+     */
+    public List<Setmeal> list(Setmeal setmeal) {
+        List<Setmeal> list = setmealMapper.list(setmeal);
+        return list;
+    }
+
+    /**
+     * 根据id查询菜品选项
+     * @param id
+     * @return
+     */
+    public List<DishItemVO> getDishItemById(Long id) {
+        return setmealMapper.getDishItemBySetmealId(id);
+    }
 }

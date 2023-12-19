@@ -37,11 +37,16 @@ logging:
 ecode:
   jwt:
     # 设置jwt签名加密时使用的秘钥
-    admin-secret-key: it
+    admin-secret-key: itcast
     # 设置jwt过期时间(24小时)
     admin-ttl: 86400000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+
+    # 用户端的小程序登录
+    user-secret-key: itheima
+    user-ttl: 86400000
+    user-token-name: authentication
 
 sky:
   alioss:
@@ -49,6 +54,9 @@ sky:
     access-key-id: ${sky.alioss.access-key-id}
     access-key-secret: ${sky.alioss.access-key-secret}
     bucket-name: ${sky.alioss.bucket-name}
+  wechat:
+    appid: ${sky.wechat.appid}
+    secret: ${sky.wechat.secret}
 
 
 
