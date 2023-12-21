@@ -64,5 +64,9 @@ sky:
     weChatPayCertFilePath: ${sky.wechat.weChatPayCertFilePath}
     notifyUrl: ${sky.wechat.notifyUrl}
     refundNotifyUrl: ${sky.wechat.refundNotifyUrl}
+#  shop:
+#    address: 北京市昌平区南丰路1号
+#  baidu:
+#    ak:
 
 

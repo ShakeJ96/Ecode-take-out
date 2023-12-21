@@ -1,6 +1,8 @@
 package com.ecode.mapper;
 
+import com.ecode.dto.OrdersPageQueryDTO;
 import com.ecode.entity.Orders;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -24,4 +26,29 @@ public interface OrderMapper {
      * @param orders
      */
     void update(Orders orders);
+
+    /**
+     * 分页条件查询并按下单时间排序
+     *
+     * @param ordersPageQueryDTO
+     * @return
+     */
+    Page<Orders> pageQuery(OrdersPageQueryDTO ordersPageQueryDTO);
+
+    /**
+     * 根据id查询
+     *
+     * @param id
+     * @return
+     */
+    @Select("select * from orders where id=#{id}")
+    Orders getById(Long id);
+
+    /**
+     * 各个状态的订单数量统计
+     *
+     * @return
+     */
+    @Select("select count(id) from orders where status=#{status}")
+    Integer countStatus(Integer toBeConfirmed);
 }
