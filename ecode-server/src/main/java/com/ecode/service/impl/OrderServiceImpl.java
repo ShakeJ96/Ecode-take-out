@@ -1,27 +1,26 @@
 package com.ecode.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ecode.constant.MessageConstant;
 import com.ecode.context.BaseContext;
+import com.ecode.dto.OrdersPaymentDTO;
 import com.ecode.dto.OrdersSubmitDTO;
-import com.ecode.entity.AddressBook;
-import com.ecode.entity.OrderDetail;
-import com.ecode.entity.Orders;
-import com.ecode.entity.ShoppingCart;
+import com.ecode.entity.*;
 import com.ecode.exception.AddressBookBusinessException;
+import com.ecode.exception.OrderBusinessException;
 import com.ecode.exception.ShoppingCartBusinessException;
-import com.ecode.mapper.AddressBookMapper;
-import com.ecode.mapper.OrderDetailMapper;
-import com.ecode.mapper.OrderMapper;
-import com.ecode.mapper.ShoppingCartMapper;
+import com.ecode.mapper.*;
 import com.ecode.service.OrderService;
+import com.ecode.utils.WeChatPayUtil;
+import com.ecode.vo.OrderPaymentVO;
 import com.ecode.vo.OrderSubmitVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +41,16 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ShoppingCartMapper shoppingCartMapper;
+
+
+    // 微信支付
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+    private WeChatPayUtil weChatPayUtil;
+
+
+
     /**
      * 实现用户下单
      * @param ordersSubmitDTO
@@ -109,5 +118,60 @@ public class OrderServiceImpl implements OrderService {
                 .build();
 
         return orderSubmitVO;
+    }
+
+
+    /**
+     * 订单支付
+     *
+     * @param ordersPaymentDTO
+     * @return
+     */
+
+    public OrderPaymentVO payment(OrdersPaymentDTO ordersPaymentDTO) throws Exception {
+        // 当前登录用户id
+        Long userId = BaseContext.getCurrentId();
+        User user = userMapper.getById(userId);
+
+        //调用微信支付接口，生成预支付交易单
+        JSONObject jsonObject = weChatPayUtil.pay(
+                ordersPaymentDTO.getOrderNumber(), //商户订单号
+                new BigDecimal(0.01), //支付金额，单位 元
+                "苍穹外卖订单", //商品描述
+                user.getOpenid() //微信用户的openid
+        );
+
+        if (jsonObject.getString("code") != null && jsonObject.getString("code").equals("ORDERPAID")) {
+            throw new OrderBusinessException("该订单已支付");
+        }
+
+        OrderPaymentVO vo = jsonObject.toJavaObject(OrderPaymentVO.class);
+        vo.setPackageStr(jsonObject.getString("package"));
+
+        return vo;
+    }
+
+    /**
+     * 支付成功，修改订单状态
+     *
+     * @param outTradeNo
+     */
+
+    public void paySuccess(String outTradeNo) {
+        // 当前登录用户id
+        Long userId = BaseContext.getCurrentId();
+
+        // 根据订单号查询当前用户的订单
+        Orders ordersDB = orderMapper.getByNumberAndUserId(outTradeNo, userId);
+
+        // 根据订单id更新订单的状态、支付方式、支付状态、结账时间
+//        Orders orders = Orders.builder()
+//                .id(ordersDB.getId())
+//                .status(Orders.TO_BE_CONFIRMED)
+//                .payStatus(Orders.PAID)
+//                .checkoutTime(LocalDateTime.now())
+//                .build();
+
+//        orderMapper.update(orders);
     }
 }
