@@ -1,5 +1,6 @@
 package com.ecode.service;
 
+import com.ecode.vo.OrderReportVO;
 import com.ecode.vo.TurnoverReportVO;
 import com.ecode.vo.UserReportVO;
 
@@ -23,4 +24,12 @@ public interface ReportService {
      * @return
      */
     UserReportVO getUsersData(LocalDate begin, LocalDate end);
+
+    /**
+     * 订单数据统计
+     * @param begin
+     * @param end
+     * @return
+     */
+    OrderReportVO getOrderStatistics(LocalDate begin, LocalDate end);
 }

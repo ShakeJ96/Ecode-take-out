@@ -2,6 +2,7 @@ package com.ecode.controller.admin;
 
 import com.ecode.result.Result;
 import com.ecode.service.ReportService;
+import com.ecode.vo.OrderReportVO;
 import com.ecode.vo.TurnoverReportVO;
 import com.ecode.vo.UserReportVO;
 import io.swagger.annotations.Api;
@@ -58,6 +59,23 @@ public class ReportController {
             LocalDate end
     ){
         return Result.success(reportService.getUsersData(begin,end));
+    }
+
+    /**
+     * 订单数据统计
+     * @param begin
+     * @param end
+     * @return
+     */
+    @GetMapping("/ordersStatistics")
+    @ApiOperation("用户数据统计")
+    public Result<OrderReportVO> orderStatistics(
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        LocalDate begin,
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        LocalDate end
+    ){
+        return Result.success(reportService.getOrderStatistics(begin,end));
     }
 
 }
