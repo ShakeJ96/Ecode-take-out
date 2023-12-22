@@ -80,7 +80,7 @@ public interface OrderService {
      * 拒单
      * @param ordersRejectionDTO
      */
-    void rejection(OrdersRejectionDTO ordersRejectionDTO);
+    void rejection(OrdersRejectionDTO ordersRejectionDTO) throws Exception;
 
     /**
      * 取消订单
@@ -99,4 +99,10 @@ public interface OrderService {
      * @param id
      */
     void complete(Long id);
+
+    /**
+     * 用户催单
+     * @param id
+     */
+    void reminder(Long id);
 }
