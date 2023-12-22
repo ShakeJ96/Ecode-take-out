@@ -37,7 +37,7 @@ public interface DishService {
     DishVO getByIdWithFlavor(Long id);
 
     /**
-     * 添加修改菜品的功能
+     * 修改菜品的功能
      * @param dishDTO
      * @return
      */

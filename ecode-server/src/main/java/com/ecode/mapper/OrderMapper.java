@@ -1,5 +1,6 @@
 package com.ecode.mapper;
 
+import com.ecode.dto.GoodsSalesDTO;
 import com.ecode.dto.OrdersPageQueryDTO;
 import com.ecode.entity.Orders;
 import com.github.pagehelper.Page;
@@ -79,4 +80,12 @@ public interface OrderMapper {
      * @return
      */
     Integer countByMap(HashMap<Object, Object> map);
+
+    /**
+     * 查询商品销量排名
+     * @param begin
+     * @param end
+     * @return
+     */
+    List<GoodsSalesDTO> getSalesTop10(LocalDateTime begin, LocalDateTime end);
 }
