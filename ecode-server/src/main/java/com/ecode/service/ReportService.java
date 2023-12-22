@@ -1,6 +1,7 @@
 package com.ecode.service;
 
 import com.ecode.vo.TurnoverReportVO;
+import com.ecode.vo.UserReportVO;
 
 import java.time.LocalDate;
 
@@ -14,4 +15,12 @@ public interface ReportService {
      */
 
     TurnoverReportVO getTurnover(LocalDate begin, LocalDate end);
+
+    /**
+     * 用户数据统计
+     * @param begin
+     * @param end
+     * @return
+     */
+    UserReportVO getUsersData(LocalDate begin, LocalDate end);
 }
