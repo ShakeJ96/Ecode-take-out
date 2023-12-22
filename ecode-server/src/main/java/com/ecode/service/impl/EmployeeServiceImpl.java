@@ -167,9 +167,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         //对象的属性拷贝
         BeanUtils.copyProperties(employeeDTO,employee);
         //更新系统的修改时间
-//        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateTime(LocalDateTime.now());
         //修改人的id
-//        employee.setUpdateUser(BaseContext.getCurrentId());
+        employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.update(employee);
     }

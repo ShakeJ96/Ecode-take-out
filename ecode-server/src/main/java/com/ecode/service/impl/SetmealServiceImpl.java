@@ -2,6 +2,7 @@ package com.ecode.service.impl;
 
 import com.ecode.constant.MessageConstant;
 import com.ecode.constant.StatusConstant;
+import com.ecode.context.BaseContext;
 import com.ecode.dto.SetmealDTO;
 import com.ecode.dto.SetmealPageQueryDTO;
 import com.ecode.entity.Dish;
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -48,6 +50,13 @@ public class SetmealServiceImpl implements SetmealService {
     public void saveWithDish(SetmealDTO setmealDTO) {
         Setmeal setmeal = new Setmeal();
         BeanUtils.copyProperties(setmealDTO, setmeal);
+
+        //加上修改的时间
+        setmeal.setCreateTime(LocalDateTime.now());
+        setmeal.setUpdateTime(LocalDateTime.now());
+
+        //加上修改人的id
+        setmeal.setUpdateUser(BaseContext.getCurrentId());
 
         //向套餐表插入数据
         setmealMapper.insert(setmeal);
@@ -156,11 +165,17 @@ public class SetmealServiceImpl implements SetmealService {
         Setmeal setmeal = new Setmeal();
         BeanUtils.copyProperties(setmealDTO, setmeal);
 
+        //加上修改的当前时间
+        setmeal.setUpdateTime(LocalDateTime.now());
+
+        //加上修改人的id
+        setmeal.setUpdateUser(BaseContext.getCurrentId());
+
         //1、修改套餐表，执行update
         setmealMapper.update(setmeal);
 
         //套餐id
-        Long setmealId = setmealDTO.getId();
+        Long setmealId = setmeal.getId();
 
         //2、删除套餐和菜品的关联关系，操作setmeal_dish表，执行delete
         setmealDishMapper.deleteBySetmealId(setmealId);

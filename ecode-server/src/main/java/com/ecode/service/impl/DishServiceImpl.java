@@ -2,6 +2,7 @@ package com.ecode.service.impl;
 
 import com.ecode.constant.MessageConstant;
 import com.ecode.constant.StatusConstant;
+import com.ecode.context.BaseContext;
 import com.ecode.dto.DishDTO;
 import com.ecode.dto.DishPageQueryDTO;
 import com.ecode.entity.Dish;
@@ -23,6 +24,8 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.beans.beancontext.BeanContext;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,8 +52,14 @@ public class DishServiceImpl implements DishService {
         Dish dish = new Dish();
         BeanUtils.copyProperties(dishDTO, dish);
 
+        //添加创建、修改的时间、以及创建、修改的管理员等
+        dish.setCreateTime(LocalDateTime.now());
+        dish.setUpdateTime(LocalDateTime.now());
+        dish.setCreateUser(BaseContext.getCurrentId());
+        dish.setUpdateUser(BaseContext.getCurrentId());
+
         //向菜品表插入1条数据
-        dishMapper.insert(dish);//后绪步骤实现
+        dishMapper.insert(dish);
 
         //获取insert语句生成的主键值
         Long dishId = dish.getId();
@@ -139,7 +148,7 @@ public class DishServiceImpl implements DishService {
     }
 
     /**
-     * 添加修改菜品的功能
+     * 修改菜品
      * @param dishDTO
      * @return
      */
@@ -147,6 +156,8 @@ public class DishServiceImpl implements DishService {
     public void updateWithFlavor(DishDTO dishDTO) {
         Dish dish = new Dish();
         BeanUtils.copyProperties(dishDTO,dish);
+        dish.setUpdateTime(LocalDateTime.now());
+        dish.setUpdateUser(BaseContext.getCurrentId());
 
         //修改菜品表的基本信息
         dishMapper.update(dish);
