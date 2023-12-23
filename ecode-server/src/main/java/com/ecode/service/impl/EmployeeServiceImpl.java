@@ -7,6 +7,7 @@ import com.ecode.context.BaseContext;
 import com.ecode.dto.EmployeeDTO;
 import com.ecode.dto.EmployeeLoginDTO;
 import com.ecode.dto.EmployeePageQueryDTO;
+import com.ecode.dto.PasswordEditDTO;
 import com.ecode.entity.Employee;
 import com.ecode.exception.AccountLockedException;
 import com.ecode.exception.AccountNotFoundException;
@@ -23,6 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import sun.security.util.Password;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -171,6 +174,31 @@ public class EmployeeServiceImpl implements EmployeeService {
         //修改人的id
         employee.setUpdateUser(BaseContext.getCurrentId());
 
+        employeeMapper.update(employee);
+    }
+
+
+    /**
+     * 修改密码
+     * @param passwordEditDTO
+     * @return
+     */
+    public void editPassword(PasswordEditDTO passwordEditDTO) {
+        //获取当前登录用户的id
+        Long empId = BaseContext.getCurrentId();
+        //就可以查到数据库的用户信息
+        Employee employee = employeeMapper.getById(empId);
+        //当前 前端传过来的oldPassword进行md5加密后
+        String pwd = DigestUtils.md5DigestAsHex(passwordEditDTO.getOldPassword().getBytes());
+        //进行对比
+        if (!pwd.equals(employee.getPassword())) {
+            //原密码错误
+            throw new PasswordErrorException("原密码错误");
+        }
+        //如果输入的原密码与数据库密码相同，则进行修改，把newPassword进行MD5加密存入数据库，密码修改成功
+        employee.setPassword(DigestUtils.md5DigestAsHex(passwordEditDTO.getNewPassword().getBytes()));
+        employee.setUpdateUser(empId);
+        employee.setUpdateTime(LocalDateTime.now());
         employeeMapper.update(employee);
     }
 

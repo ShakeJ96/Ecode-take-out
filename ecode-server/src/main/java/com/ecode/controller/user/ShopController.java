@@ -16,6 +16,8 @@ public class ShopController {
 
     public static final String KEY = "SHOP_STATUS";
 
+    public static final String PHONE = "18900000000";
+
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -30,4 +32,19 @@ public class ShopController {
         log.info("获取到店铺的营业状态为：{}",status == 1 ? "营业中" : "打烊中");
         return Result.success(status);
     }
+
+    /**
+     * 获取店铺电话号码
+     *//**
+     * 获取店铺电话
+     * @return
+     */
+    @GetMapping("/phone")
+    @ApiOperation("获取店铺电话")
+    public Result<String> getShopPhone(){
+        log.info("获取店铺电话");
+        return Result.success(PHONE);
+    }
+
+
 }

@@ -3,8 +3,11 @@ package com.ecode.service;
 import com.ecode.dto.EmployeeDTO;
 import com.ecode.dto.EmployeeLoginDTO;
 import com.ecode.dto.EmployeePageQueryDTO;
+import com.ecode.dto.PasswordEditDTO;
 import com.ecode.entity.Employee;
 import com.ecode.result.PageResult;
+
+import javax.servlet.http.HttpServletRequest;
 
 public interface EmployeeService {
 
@@ -48,4 +51,10 @@ public interface EmployeeService {
      * @param employeeDTO
      */
     void update(EmployeeDTO employeeDTO);
+
+    /**
+     * 修改密码
+     * @param passwordEditDTO
+     */
+    void editPassword(PasswordEditDTO passwordEditDTO);
 }

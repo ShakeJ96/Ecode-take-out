@@ -4,6 +4,7 @@ import com.ecode.constant.JwtClaimsConstant;
 import com.ecode.dto.EmployeeDTO;
 import com.ecode.dto.EmployeeLoginDTO;
 import com.ecode.dto.EmployeePageQueryDTO;
+import com.ecode.dto.PasswordEditDTO;
 import com.ecode.entity.Employee;
 import com.ecode.properties.JwtProperties;
 import com.ecode.result.PageResult;
@@ -13,12 +14,11 @@ import com.ecode.utils.JwtUtil;
 import com.ecode.vo.EmployeeLoginVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import jdk.jpackage.internal.Log;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +35,7 @@ public class EmployeeController {
     private EmployeeService employeeService;
     @Autowired
     private JwtProperties jwtProperties;
+
 
     /**
      * 登录
@@ -147,6 +148,19 @@ public class EmployeeController {
     public Result update(@RequestBody EmployeeDTO employeeDTO){
         log.info("编辑员工信息：{}",employeeDTO);
         employeeService.update(employeeDTO);
+        return Result.success();
+    }
+
+    /**
+     * 修改员工密码
+     * @param passwordEditDTO
+     * @return
+     */
+    @PutMapping("/editPassword")
+    @ApiOperation("修改员工密码")
+    public Result editPassWord(@RequestBody PasswordEditDTO passwordEditDTO){
+        log.info("修改员工的密码：{}",passwordEditDTO);
+        employeeService.editPassword(passwordEditDTO);
         return Result.success();
     }
 }
