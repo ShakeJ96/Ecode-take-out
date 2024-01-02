@@ -15,12 +15,12 @@ ecode:
 sky:
   alioss:
     endpoint: oss-cn-beijing.aliyuncs.com
-    access-key-id: LTAI5tL1Wqn5sp7YgmxZReZm
-    access-key-secret: DJUWlXwdcHKUI0eIswreqqZBQKFQfV
-    bucket-name: ecode-take-out
+    access-key-id: LT**************gmxZReZm
+    access-key-secret: D*******************e*KFQfV
+    bucket-name: **********
   wechat:
-    appid: wxcc751972a9184930
-    secret: d426a290b6c5033c2d3cb51d4a7cdb1c
+    appid: wx************0
+    secret: d426a2****************d4a7cdb1c
     # 微信支付，暂未实现
     mchid: 1561414331
     mchSerialNo: 4B3B3DC35414AD50B1B755BAF8DE9CC7CF407606
@@ -30,16 +30,3 @@ sky:
     notifyUrl: https://www.weixin.qq.com/wxpay/pay.php
     refundNotifyUrl: https://www.weixin.qq.com/wxpay/pay.php
 
-
-#  alioss:
-#    endpoint: oss-cn-beijing.aliyuncs.com
-#    access-key-id: LTAI5tHYvwsiNyzBQZxcu31T
-#    access-key-secret: jeyJNXSWVT6emqj8axGPsITcAkCSnL
-#    bucket-name: bupt-take-out
-
-#sky:
-#  alioss:
-#    endpoint: oss-cn-hangzhou.aliyuncs.com
-#    access-key-id: LTAI5tPeFLzsPPT8gG3LPW64
-#    access-key-secret: U6k1brOZ8gaOIXv3nXbulGTUzy6Pd7
-#    bucket-name: sky-take-out
